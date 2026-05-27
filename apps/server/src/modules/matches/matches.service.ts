@@ -4,7 +4,6 @@ import { publishToChannel } from '../../config/redis';
 import { REDIS_CHANNEL_PREFIX } from '../coinbase/coinbase.constants';
 import type { CoinbaseMatch } from '../coinbase/coinbase.types';
 import type { Trade } from './matches.types';
-import { matchRepository } from './matches.repository';
 
 export class MatchEngine {
   private buffer: Map<string, Trade[]> = new Map();
@@ -32,9 +31,7 @@ export class MatchEngine {
     };
     await publishToChannel(channel, wsPayload);
 
-    // 3. Persist to DB (async, non-blocking)
-    // In a higher-throughput environment, this should use a batch insert strategy
-    matchRepository.saveTrade(trade).catch(e => logger.error('DB trade save error', e));
+
   }
 
   private addToBuffer(trade: Trade) {

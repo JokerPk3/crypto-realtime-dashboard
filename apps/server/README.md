@@ -9,7 +9,7 @@ This is the **backend component** of the Crypto Realtime Platform assignment. It
 - Manages real-time order book data (level2 updates)
 - Processes and distributes trade data
 - Handles multiple concurrent client connections
-- Provides REST API for historical data and metrics
+- Provides REST API for metrics and health checks
 - Implements Redis Pub/Sub for horizontal scaling
 
 ## 🏗️ Architecture
@@ -243,27 +243,6 @@ Response: {
   reconnectAttempts: number,
   timestamp: string
 }
-```
-
-#### Orderbook
-```
-GET /api/orderbook/:productId
-Response: {
-  productId: string,
-  bids: [[price, size], ...],
-  asks: [[price, size], ...],
-  timestamp: string
-}
-```
-
-#### Trades
-```
-GET /api/trades
-Query: ?productId=BTC-USD&limit=20&offset=0
-Response: [
-  {id, productId, side, price, size, timestamp, tradeId},
-  ...
-]
 ```
 
 #### Metrics

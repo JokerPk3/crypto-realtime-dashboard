@@ -167,8 +167,6 @@ crypto-realtime-platform/
 
 ### REST Endpoints
 - `GET /api/health` - Health check
-- `GET /api/trades` - Fetch recent trades
-- `GET /api/orderbook/:productId` - Get order book snapshot
 - `GET /api/system-status` - System health and metrics
 - `GET /api/metrics` - Performance metrics
 

@@ -3,16 +3,13 @@ import app from './app';
 import { env } from './config/env';
 import { logger } from './config/logger';
 import { wsGateway } from './modules/websocket/websocket.gateway';
-import { connectDatabase } from './config/db';
 import { coinbaseManager } from './modules/coinbase/coinbase.service';
 
 const server = http.createServer(app);
 
 const startServer = async () => {
   try {
-    await connectDatabase();
-    
-    server.listen(env.PORT, () => {
+      server.listen(env.PORT, () => {
       logger.info(`Server is running in ${env.NODE_ENV} mode on port ${env.PORT}`);
       wsGateway.initialize(server);
       coinbaseManager.connect();

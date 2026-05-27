@@ -7,9 +7,7 @@ import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import { logger } from './config/logger';
 import { healthRouter } from './modules/health/health.router';
-import { tradesRouter } from './modules/trades/trades.router';
 import { systemStatusRouter } from './modules/system-status/system-status.router';
-import { orderbookRouter } from './modules/orderbook/orderbook.router';
 import { metricsRouter } from './modules/metrics/metrics.router';
 import { errorMiddleware } from './shared/middleware/errorMiddleware';
 import { notFoundMiddleware } from './shared/middleware/notFoundMiddleware';
@@ -17,7 +15,30 @@ import { notFoundMiddleware } from './shared/middleware/notFoundMiddleware';
 const app: Application = express();
 
 // 1. Security headers
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: ["'self'", 'ws://', 'wss://', 'https:'],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"],
+      imgSrc: ["'self'", 'data:', 'https:'],
+    },
+  },
+  crossOriginEmbedderPolicy: true,
+  crossOriginOpenerPolicy: true,
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  dnsPrefetchControl: true,
+  frameguard: { action: 'deny' },
+  hidePoweredBy: true,
+  hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
+  ieNoOpen: true,
+  noSniff: true,
+  originAgentCluster: true,
+  permittedCrossDomainPolicies: false,
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  xssFilter: true,
+}));
 
 // 2. CORS
 app.use(cors({
@@ -59,9 +80,7 @@ app.get('/', (req: Request, res: Response) => {
 
 // Mount modular routers
 app.use('/health', healthRouter);
-app.use('/api/trades', tradesRouter);
 app.use('/api/system-status', systemStatusRouter);
-app.use('/api/orderbook', orderbookRouter);
 app.use('/api/metrics', metricsRouter);
 
 // 404 Handler
