@@ -92,7 +92,7 @@ export const SubscriptionPanel: React.FC<
                     active ? 'success' : 'neutral'
                   }
                 >
-                  {active ? 'LIVE' : 'OFF'}
+                  {active ? 'LIVE' : 'SUBSCRIBE'}
                 </Badge>
               </div>
             </button>

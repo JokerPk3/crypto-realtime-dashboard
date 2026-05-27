@@ -2,6 +2,7 @@
 
 A React TypeScript single-page application (SPA) for real-time cryptocurrency market data visualization. Connects to the backend WebSocket server to display live order books, trades, and subscription status.
 
+
 ## 🎯 Overview
 
 This is the **frontend component** of the Crypto Realtime Platform assignment. It provides an interactive dashboard for users to:
@@ -336,11 +337,11 @@ npm run test:coverage
 
 Create `apps/client/.env` if needed:
 ```env
-VITE_API_URL=http://localhost:4000
+# WebSocket endpoint used by the client to receive real-time data
 VITE_WS_URL=ws://localhost:4000
 ```
 
-**Note**: These can be hardcoded for now. In production, use environment-specific configs.
+Note: `VITE_API_URL` and REST-based trades/orderbook endpoints are not used in this project — the frontend relies on the WebSocket protocol for all market data.
 
 ## 🎯 Assignment Requirements - Frontend
 
